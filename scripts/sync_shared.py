@@ -117,7 +117,9 @@ def sync_plugin(plugin_dir: Path, available_components: dict):
         src_file = available_components[comp]
         dst_file = target_shared / src_file.name
         shutil.copy2(src_file, dst_file)
-        qmldir_lines.append(f"{comp} 1.0 {src_file.name}")
+        is_singleton = bool(re.search(r"^\s*pragma\s+Singleton\b", src_file.read_text(encoding="utf-8"), re.MULTILINE))
+        prefix = "singleton " if is_singleton else ""
+        qmldir_lines.append(f"{prefix}{comp} 1.0 {src_file.name}")
 
     # Copy assets if FeedbackCard or NoteCard or any component uses them
     src_assets = SOURCE_SHARED / "assets"

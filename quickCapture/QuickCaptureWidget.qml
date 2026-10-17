@@ -61,8 +61,8 @@ PluginComponent {
         root.daemon.capture(Defaults.get(pluginData, settingKey), "edit", "", fromControlCenter);
     }
 
-    popoutWidth: 260
-    popoutHeight: root.widgetMode === "video" ? (root.isRecording ? 320 : 290) : 445 + Math.min((root.daemon?.outputs ?? []).length, 5) * 32
+    popoutWidth: 280
+    popoutHeight: root.widgetMode === "video" ? (root.isRecording ? 320 : 310) : 465 + Math.min((root.daemon?.outputs ?? []).length, 5) * 38
 
     popoutContent: Component {
         CaptureMenu {
@@ -94,7 +94,7 @@ PluginComponent {
     }
 
     ccWidgetIcon: root.isRecording ? "videocam" : "screenshot_region"
-    ccWidgetPrimaryText: root.isRecording ? I18n.trFor("quickCapture", "Recording...") : (root.widgetMode === "video" ? I18n.trFor("quickCapture", "Screen Recording") : I18n.trFor("quickCapture", "Quick Capture"))
+    ccWidgetPrimaryText: I18n.trFor("quickCapture", "Quick Capture")
     ccWidgetSecondaryText: {
         if (root.isRecording)
             return root.durationText;
@@ -110,7 +110,7 @@ PluginComponent {
         }
         root.runDefaultAction("middleClickAction", true);
     }
-    ccDetailHeight: 245
+    ccDetailHeight: 256
 
     ccDetailContent: Component {
         CaptureDetail {

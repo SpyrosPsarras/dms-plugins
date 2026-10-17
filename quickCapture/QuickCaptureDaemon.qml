@@ -574,21 +574,12 @@ PluginComponent {
         onBackgroundClicked: close()
         onDialogClosed: root.runPendingMenuAction()
 
-        modalWidth: menuWidgetAdapter.popoutWidth + Theme.spacingM * 2
-        modalHeight: (contentLoader?.item?.menuImplicitHeight ?? 360) + Theme.spacingM * 2
+        modalWidth: 432 + Theme.spacingM * 2
+        modalHeight: 304 + Theme.spacingM * 2
 
         content: Component {
-            Item {
-                readonly property real menuImplicitHeight: menuContent.implicitHeight
-
-                CaptureMenu {
-                    id: menuContent
-                    x: Theme.spacingM
-                    y: Theme.spacingM
-                    width: menuWidgetAdapter.popoutWidth
-                    showCloseButton: true
-                    widget: menuWidgetAdapter
-                }
+            CaptureLauncherModal {
+                widget: menuWidgetAdapter
             }
         }
     }

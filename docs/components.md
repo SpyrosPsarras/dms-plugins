@@ -90,3 +90,5 @@ import "./shared"
 | **`CreditsList`** | Standardized credits list with Material 3 author chip badges, URLs, and role text. |
 | **`Separator`** | Thin divider line between settings rows. |
 | **`NumericText`** | Number counter or readout with formatted units. |
+| **`M3E`** (`singleton`) | Material 3 Expressive motion curves, durations, connected group radii, and hover/press morphing tokens. |
+

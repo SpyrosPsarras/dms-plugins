@@ -194,7 +194,10 @@ def get_plugin_shared_components(plugin_dir: Path) -> Tuple[Set[str], Set[str]]:
             for line in qmldir.read_text(encoding="utf-8").splitlines():
                 parts = line.strip().split()
                 if parts and not parts[0].startswith("#") and parts[0] != "module":
-                    qmldir_types.add(parts[0])
+                    if parts[0] == "singleton" and len(parts) > 1:
+                        qmldir_types.add(parts[1])
+                    else:
+                        qmldir_types.add(parts[0])
         except Exception:
             pass
 

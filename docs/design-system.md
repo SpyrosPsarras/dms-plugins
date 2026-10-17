@@ -94,3 +94,24 @@ Always use `Theme` tokens (`import qs.Common`). Never hardcode hex strings, pixe
 | `Theme.fontSizeMedium` | ~`13px-14px` | Body text, standard button labels, inputs. |
 | `Theme.fontSizeLarge` | ~`16px-18px` | Card headers, section titles, modal titles. |
 | `Theme.fontSizeXLarge` | ~`20px-24px` | Prominent headings, hero metrics, clock displays. |
+
+---
+
+## 8. Material 3 Expressive (`M3E` Shared Singleton)
+
+Import `./shared` (or `../shared`, `../../shared`) to access `M3E` (`shared/M3E.qml`), which standardizes M3E spatial motion, connected button/list radii, and hover/press morphing across plugins:
+
+| Token / Helper | Purpose |
+| :--- | :--- |
+| `M3E.spatialFastMs`, `M3E.spatialDefaultMs`, `M3E.spatialSlowMs` | Expressive spatial spring durations (with fallback to `Theme.*Duration`). |
+| `M3E.effectsFastMs`, `M3E.effectsMs`, `M3E.effectsSlowMs` | Color/opacity transition durations. |
+| `M3E.curveFastSpatial`, `M3E.curveDefaultSpatial`, `M3E.curveEffects` | Bezier spline arrays (`Easing.BezierSpline`). |
+| `M3E.outerR`, `M3E.innerR`, `M3E.groupGap` | Connected list/button group outer radius (`16`), inner seam radius (`6`), and gap (`2`). |
+| `M3E.pressRadiusXXS`, `M3E.pressRadiusXS`, `M3E.pressRadiusS` | Squircle corner radii when pressed (`4`, `6`, `8`). |
+| `M3E.tilePressScale`, `M3E.rowPressScale`, `M3E.iconBtnPressScale` | Press scale factors (`0.96`, `0.97`, `0.93`) without hover scale overshoot. |
+| `M3E.tileIconPillWidth`, `M3E.tileIconPillActiveWidth`, `M3E.tileIconPillHeight` | Morphing icon pill dimensions for grid tiles (`34` → `42`, height `28`). |
+| `M3E.rowIconPillWidth`, `M3E.rowIconPillActiveWidth`, `M3E.rowIconPillHeight` | Morphing icon pill dimensions for list rows (`28` → `34`, height `26`). |
+| `M3E.activeBlendFactor`, `M3E.switcherActiveRatio` | Highlight hover blend (`0.18`) and 2-segment switcher active ratio (`0.68`). |
+| `M3E.tileRadius(pressed, hovered, highlighted)` | Computes M3E morphing radius for grid tiles. |
+| `M3E.iconPillRadius(pressed, hovered, height)` | Computes M3E morphing radius for inner icon pills. |
+
