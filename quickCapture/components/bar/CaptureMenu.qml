@@ -534,10 +534,7 @@ PopoutComponent {
                     text: modelData.label
                     highlighted: modelData.value === "region"
                     showPin: false
-                    onTriggered: {
-                        root.widget.closePopout();
-                        root.daemon?.record(modelData.value);
-                    }
+                    onTriggered: root.widget.runAfterPopoutClosed(() => root.daemon?.record(modelData.value))
                 }
             }
 

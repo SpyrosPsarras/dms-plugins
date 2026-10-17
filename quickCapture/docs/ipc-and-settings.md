@@ -18,11 +18,13 @@ Commands that capture or open images accept an `action` parameter (`edit` / `flo
 
 | Command | Arguments | Description |
 | :--- | :--- | :--- |
+| `open` | *(none)* | Opens the centered Quick Capture menu modal. |
+| `toggle` / `menu` | *(none)* | Toggles the centered Quick Capture menu modal. |
 | `screenshot` | `mode` (`region`, `full`, `all`, `output`, `window`, `last`, `scroll`) | Triggers a screenshot. |
 | `selectFile` | `action` | Opens file picker. |
 | `fromClipboard` | `action` | Imports image from clipboard. |
 | `openImage` | `path`, `action` | Opens a local image file. |
-| `close` | *(none)* | Closes the annotator. |
+| `close` | *(none)* | Closes the annotator or menu modal. |
 | `showHistory` | *(none)* | Opens the Recent Edits history carousel. |
 | `recordStart` | `mode` (`screen`, `region`, `portal`) | Starts screen recording. |
 | `recordStop` | *(none)* | Stops screen recording. |
@@ -32,6 +34,7 @@ Commands that capture or open images accept an `action` parameter (`edit` / `flo
 | `recordStatus` | *(none)* | Returns recorder status. |
 
 ```bash
+dms ipc call quickCapture toggle                    # toggle centered menu
 dms ipc call quickCapture screenshot region edit    # open editor
 dms ipc call quickCapture screenshot region float   # float directly
 dms ipc call quickCapture recordStart region        # record selected region
