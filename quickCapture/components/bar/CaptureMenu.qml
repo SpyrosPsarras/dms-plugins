@@ -910,7 +910,10 @@ PopoutComponent {
             isFirst: true
             iconName: "folder"
             label: I18n.trFor("quickCapture", "Folder")
-            onClicked: root.daemon?.openFolder(root.videoMode ? "video" : "photo")
+            onClicked: {
+                root.widget.closePopout();
+                root.daemon?.openFolder(root.videoMode ? "video" : "photo");
+            }
         }
 
         ConnectedFooterButton {

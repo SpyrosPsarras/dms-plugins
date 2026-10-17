@@ -556,7 +556,10 @@ Item {
                     isFirst: true
                     iconName: "open_in_new"
                     tooltipText: root.videoMode ? I18n.trFor("quickCapture", "Recording Folder") : I18n.trFor("quickCapture", "Screenshot Folder")
-                    onClicked: root.daemon?.openFolder(root.videoMode ? "video" : "photo")
+                    onClicked: {
+                        root.widget.closePopout();
+                        root.daemon?.openFolder(root.videoMode ? "video" : "photo");
+                    }
                 }
 
                 ConnectedIconButton {

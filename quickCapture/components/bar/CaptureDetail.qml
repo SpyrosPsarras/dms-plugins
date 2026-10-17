@@ -456,7 +456,10 @@ Item {
                 ConnectedIconButton {
                     isFirst: true
                     iconName: "open_in_new"
-                    onClicked: root.daemon?.openFolder(root.videoMode ? "video" : "photo")
+                    onClicked: {
+                        root.daemon?.closeControlCenter();
+                        root.daemon?.openFolder(root.videoMode ? "video" : "photo");
+                    }
                 }
 
                 ConnectedIconButton {
