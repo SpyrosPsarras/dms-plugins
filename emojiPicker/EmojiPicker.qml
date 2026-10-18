@@ -636,14 +636,20 @@ PluginComponent {
 
                     Rectangle {
                         id: skinToneBtn
-                        Layout.preferredWidth: searchField.height
-                        Layout.preferredHeight: searchField.height
+                        Layout.preferredWidth: Math.max(searchField.implicitHeight, searchField.height)
+                        Layout.preferredHeight: Math.max(searchField.implicitHeight, searchField.height)
                         radius: height / 2
                         color: skinToneBtnMouse.containsMouse || skinToneDropdown.menuVisible
-                            ? Theme.surfaceContainerHigh
-                            : Theme.chipSurface
+                            ? (typeof Theme.foregroundColor === "function" ? Theme.foregroundColor(Theme.surfaceContainerHigh) : Theme.surfaceContainerHigh)
+                            : (typeof Theme.foregroundColor === "function" ? Theme.foregroundColor(Theme.chipSurface) : Theme.chipSurface)
                         border.width: 1
                         border.color: skinToneDropdown.menuVisible ? Theme.primary : Theme.outlineVariant
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: Theme.shortDuration ?? 150
+                            }
+                        }
 
                         StyledText {
                             anchors.centerIn: parent
