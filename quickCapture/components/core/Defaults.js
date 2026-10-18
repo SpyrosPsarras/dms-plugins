@@ -27,6 +27,7 @@ const values = {
     recordMic: false,
     micDevice: "default_input",
     audioCodec: "opus",
+    recordingStatusLocation: "auto",
     showPillBorder: false,
     blinkRecordDot: true,
     showRegionBorder: true,

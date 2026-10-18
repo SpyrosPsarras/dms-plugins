@@ -16,6 +16,23 @@ PanelWindow {
     readonly property bool isPaused: recorder?.isPaused ?? false
     readonly property bool blinkRecordDot: Defaults.get(daemon?.pluginData, "blinkRecordDot")
     readonly property string durationText: recorder ? recorder.formatDuration(recorder.recordingSeconds) : "00:00"
+    readonly property string statusLocation: Defaults.get(daemon?.pluginData, "recordingStatusLocation")
+    readonly property bool showPillBorder: Defaults.get(daemon?.pluginData, "showPillBorder")
+
+    readonly property bool shouldBeVisible: {
+        if (!root.isRecording)
+            return false;
+        switch (root.statusLocation) {
+        case "floating":
+        case "both":
+            return true;
+        case "bar":
+            return false;
+        case "auto":
+        default:
+            return !(root.daemon?.hasBarWidget ?? false);
+        }
+    }
 
     property var targetScreen: CompositorService.getFocusedScreen() ?? Quickshell.screens[0] ?? null
     property bool hasCustomPosition: false
@@ -23,7 +40,7 @@ PanelWindow {
     property real customY: 0
 
     screen: targetScreen
-    visible: root.isRecording && !(root.daemon?.hasSurfaceWidget ?? false)
+    visible: shouldBeVisible
     color: "transparent"
 
     WlrLayershell.namespace: "dms:quick-capture-recording-pill"
@@ -95,7 +112,7 @@ PanelWindow {
         radius: height / 2
         color: Theme.withAlpha(Theme.surfaceContainer, Theme.popupTransparency)
         border.color: Theme.outlineVariant
-        border.width: 1
+        border.width: root.showPillBorder ? 1 : 0
 
         x: root.hasCustomPosition
             ? Math.max(root.minX, Math.min(root.maxX, root.customX))

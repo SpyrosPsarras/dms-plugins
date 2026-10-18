@@ -1,6 +1,7 @@
 import QtQuick
 import qs.Common
 import qs.Widgets
+import "../core/Defaults.js" as Defaults
 
 Item {
     id: root
@@ -9,11 +10,13 @@ Item {
     property bool vertical: false
     readonly property bool isRecording: widget.isRecording
     readonly property bool isPaused: widget.isPaused
+    readonly property string statusLocation: Defaults.get(widget.pluginData, "recordingStatusLocation")
+    readonly property bool showRecordingStatus: root.isRecording && (root.statusLocation !== "floating")
     property bool draggingOver: false
 
     width: implicitWidth
     height: implicitHeight
-    implicitWidth: vertical ? Math.max(Theme.iconSizeSmall, layout.implicitWidth) : (isRecording ? layout.implicitWidth : Theme.iconSizeSmall)
+    implicitWidth: vertical ? Math.max(Theme.iconSizeSmall, layout.implicitWidth) : (showRecordingStatus ? layout.implicitWidth : Theme.iconSizeSmall)
     implicitHeight: vertical ? layout.implicitHeight : Theme.iconSize
     anchors.verticalCenter: vertical ? undefined : parent.verticalCenter
     anchors.horizontalCenter: vertical ? parent.horizontalCenter : undefined
@@ -29,8 +32,8 @@ Item {
     Grid {
         id: layout
         anchors.centerIn: parent
-        columns: root.vertical ? 1 : (root.isRecording ? 3 : 1)
-        spacing: root.isRecording ? (root.vertical ? Theme.spacingXS : Theme.spacingS) : 0
+        columns: root.vertical ? 1 : (root.showRecordingStatus ? 3 : 1)
+        spacing: root.showRecordingStatus ? (root.vertical ? Theme.spacingXS : Theme.spacingS) : 0
         horizontalItemAlignment: Grid.AlignHCenter
         verticalItemAlignment: Grid.AlignVCenter
         scale: root.draggingOver ? 1.2 : 1.0
@@ -42,22 +45,22 @@ Item {
         }
 
         DankIcon {
-            visible: !root.isRecording
+            visible: !root.showRecordingStatus
             width: visible ? Theme.iconSizeSmall : 0
             implicitWidth: visible ? Theme.iconSizeSmall : 0
-            name: root.widget.isDownloading ? "download" : (root.widget.widgetMode === "video" ? "videocam" : "screenshot_region")
+            name: root.widget.isDownloading ? "download" : (root.widget.widgetMode === "video" || root.isRecording ? "videocam" : "screenshot_region")
             size: Theme.iconSizeSmall
-            color: root.draggingOver || root.widget.isActive || root.widget.isDownloading ? Theme.primary : Theme.surfaceText
+            color: root.isRecording ? (root.isPaused ? Theme.warning : Theme.error) : (root.draggingOver || root.widget.isActive || root.widget.isDownloading ? Theme.primary : Theme.surfaceText)
         }
 
         RecordingDot {
-            visible: root.isRecording
+            visible: root.showRecordingStatus
             paused: root.isPaused
             blink: root.widget.blinkRecordDot
         }
 
         StyledText {
-            visible: root.isRecording
+            visible: root.showRecordingStatus
             text: root.vertical ? root.widget.durationText.split(":").join("\n") : root.widget.durationText
             color: root.isPaused ? Theme.warning : Theme.widgetTextColor
             font.pixelSize: Theme.barTextSize(root.widget.barThickness, root.widget.barConfig?.fontScale, root.widget.barConfig?.maximizeWidgetText)
@@ -69,7 +72,7 @@ Item {
         }
 
         RecordingTransport {
-            visible: root.isRecording
+            visible: root.showRecordingStatus
             recorder: root.widget.recorder
             vertical: root.vertical
             buttonSize: 24
