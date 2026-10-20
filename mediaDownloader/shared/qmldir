@@ -1,4 +1,5 @@
 module dms.common
+singleton M3E 1.0 M3E.qml
 ActionTile 1.0 ActionTile.qml
 DankSliderPlus 1.0 DankSliderPlus.qml
 NumericText 1.0 NumericText.qml
